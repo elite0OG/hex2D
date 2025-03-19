@@ -76,12 +76,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)packages\glfw.3.4.0\build\native\include;$(SolutionDir)packages\glew-2.2.0\include;$(SolutionDir)headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)packages\imgui\include;$(SolutionDir)packages\glfw.3.4.0\build\native\include;$(SolutionDir)packages\glew-2.2.0\include;$(SolutionDir)headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glew32.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glew32.lib;opengl32.lib;d3d11.lib;dxgi.lib;d3dcompiler.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)packages\glew-2.2.0\lib\Release\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <Lib>
@@ -113,12 +113,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)packages\glfw.3.4.0\build\native\include;$(SolutionDir)packages\glew-2.2.0\include;$(SolutionDir)headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)packages\imgui\include;$(SolutionDir)packages\glfw.3.4.0\build\native\include;$(SolutionDir)packages\glew-2.2.0\include;$(SolutionDir)headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glew32.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glew32.lib;opengl32.lib;d3d11.lib;dxgi.lib;d3dcompiler.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)packages\glew-2.2.0\lib\Release\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <Lib>
@@ -150,6 +150,13 @@
     <None Include="Resources\Shaders\def_vert.glsl" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="packages\imgui\lib\imgui.cpp" />
+    <ClCompile Include="packages\imgui\lib\imgui_demo.cpp" />
+    <ClCompile Include="packages\imgui\lib\imgui_draw.cpp" />
+    <ClCompile Include="packages\imgui\lib\imgui_impl_glfw.cpp" />
+    <ClCompile Include="packages\imgui\lib\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="packages\imgui\lib\imgui_tables.cpp" />
+    <ClCompile Include="packages\imgui\lib\imgui_widgets.cpp" />
     <ClCompile Include="src\application.cpp" />
     <ClCompile Include="src\ShaderClass.cpp" />
     <ClCompile Include="src\renderer.cpp" />

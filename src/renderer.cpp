@@ -1,6 +1,10 @@
-#include "renderer.h"
+﻿#define STB_IMAGE_IMPLEMENTATION
 
-void log(unsigned int LOG, const char* v)
+//glViewport
+
+#include "renderer.h"
+ 
+void Hlog(unsigned int LOG, const char* v)
 {
 	switch (LOG) {
 	case LOG_INFO:
@@ -19,7 +23,7 @@ void log(unsigned int LOG, const char* v)
 	
 }
 
-void log(unsigned int LOG, std::string v)
+void Hlog(unsigned int LOG, std::string v)
 {
 
 	switch (LOG) {
@@ -44,9 +48,11 @@ std::string sstc(std::string t1, std::string t2)
 	return (t1 + t2);
 }
  
-void Renderer::init(glm::vec2 windowsize) 
+void Renderer::init(WindowHandel handel)
 {
-	rendersize = windowsize;
+	h = handel;
+	if(handel.GetApiClint() == API_GL){
+
 		verticis =
 		{
 			 0.5f,  0.5f, 0.0f,  // top right
@@ -54,7 +60,7 @@ void Renderer::init(glm::vec2 windowsize)
 			-0.5f, -0.5f, 0.0f,  // bottom left
 			-0.5f,  0.5f, 0.0f   // top left 
 		};
-	
+
 		glGenVertexArrays(1, &m_VAO);
 		glGenBuffers(1, &m_VBO);
 		glGenBuffers(1, &m_EBO);
@@ -70,32 +76,50 @@ void Renderer::init(glm::vec2 windowsize)
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 		glEnableVertexAttribArray(0);
 
-		glBindVertexArray(0);  
+		glBindVertexArray(0);
 
 
-	shader.load_shader("Resources/Shaders/def_vert.glsl", "Resources/Shaders/def_frag.glsl");
-	 
+		shader.load_shader("Resources/Shaders/def_vert.glsl", "Resources/Shaders/def_frag.glsl");
+
+		ImGui::CreateContext();                           // 1️⃣ Create ImGui context
+		ImGuiIO& io = ImGui::GetIO(); (void)io;          // 2️⃣ Get IO (for inputs, fonts)
+		ImGui::StyleColorsDark();                         // 3️⃣ Set dark mode (optional)
+
+		// 4️⃣ Initialize GLFW + OpenGL for ImGui
+		ImGui_ImplGlfw_InitForOpenGL(h.GetHandel(), true);
+		ImGui_ImplOpenGL3_Init("#version 460");  // Use your GLSL version
+
+	}
 }
 
  
 
 void Renderer::ShutDown()
 {
-	log(LOG_INFO, "Renderer closed successfully");
-	glDeleteBuffers(1, &m_VBO);
-	glDeleteBuffers(1, &m_EBO);
-	 
-	glDeleteVertexArrays(1, &m_VAO);
+	Hlog(LOG_INFO, "Renderer closed successfully");
+
+	if (h.GetApiClint() == API_GL)  // OpenGL shutdown
+	{
+		glDeleteBuffers(1, &m_VBO);
+		glDeleteBuffers(1, &m_EBO);
+		glDeleteVertexArrays(1, &m_VAO);
+		ImGui_ImplOpenGL3_Shutdown();
+	}
+
+	if (ImGui::GetCurrentContext()) {
+		ImGui_ImplGlfw_Shutdown();
+		ImGui::DestroyContext();
+	}
 }
 
 void Renderer::RendererHint(unsigned int hint, int value)
 {
 	if (hint == DEFALT_RENDERER_TYPE && value == 4)
 	{
-		log(LOG_INFO, "THE RENDERER WILL ONLY GOING TO DRAW QUAD! AND TRIANGLES ARE THE PART OF THEM");
+		Hlog(LOG_INFO, "THE RENDERER WILL ONLY GOING TO DRAW QUAD! AND TRIANGLES ARE THE PART OF THE QUAD");
 	}
 	else {
-		log(LOG_WARN, "RENDERER IS UNABLE TO RECOGNIZE THE RENDERING TYPE DEFALT TYPE IS SETED!"); 
+		Hlog(LOG_WARN, "RENDERER IS UNABLE TO RECOGNIZE THE RENDERING TYPE DEFALT TYPE IS SETED!"); 
 		value = 4;
 		hint = DEFALT_RENDERER_TYPE;
 	}
@@ -185,16 +209,60 @@ void Renderer::beginDrawing()
 {
 	isdrawablity = true;
 	glfwPollEvents();
-	glDisable(GL_CULL_FACE);
-	glEnable(GL_DEPTH_TEST);
+
+	if (h.GetApiClint() == API_GL) {
+		glDisable(GL_CULL_FACE);
+		glEnable(GL_DEPTH_TEST);
+
+		// ✅ Initialize ImGui Frame
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
+
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	}
+	else if (h.GetApiClint() == API_DIRECTX) {
+		if (!h.pContext || !h.pSwap) return; // ✅ Prevents crash if DX is not initialized
+
+		// ✅ Initialize ImGui Frame for DirectX
+		//ImGui_ImplDX11_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
+	}
 }
 
-void Renderer::endDrawing(GLFWwindow* h)
+void Renderer::endDrawing() {
+	if (h.GetApiClint() == API_GL) {
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+		glfwSwapBuffers(h.GetHandel());
+	}
+	else if (h.GetApiClint() == API_DIRECTX) {
+		if (!h.pContext || !h.pSwap || glfwWindowShouldClose(h.GetHandel())) return;  // ✅ Prevent access after shutdown
+
+		// ✅ Ensure ImGui rendering for DirectX
+		ImGui::Render();
+		//ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+
+		h.pSwap->Present(1, 0);
+	}
+}
+
+void Renderer::DrawTextHex(const char* s, glm::vec2 pos, glm::vec4 color)
 {
-	glfwSwapBuffers(h);
+	
+
+	//gltSetText(text,  s);
+	//// Draw any amount of text between begin and end
+	//gltColor(color.x/255.f, color.y / 255.f, color.z / 255.f, color.w / 255.f);
+	//gltDrawText2D(text, pos.x, pos.y, 2.f);
+
+
+	
 }
 
 void Renderer::PrintProjection()
 {
-	log(LOG_INFO, ("Projection: " + glm::to_string(projection)).c_str());
+	Hlog(LOG_INFO, ("Projection: " + glm::to_string(projection)).c_str());
 }

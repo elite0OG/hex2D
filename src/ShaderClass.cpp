@@ -5,11 +5,11 @@ std::string Shader::read_file(const char* filePath)
 	std::ifstream file(filePath);
 	if (!file.is_open())
 	{
-		log(LOG_ERROR, "Could not open shader");
+		Hlog(LOG_ERROR, "Could not open shader");
 		return "";
 	}
 	else {
-		log(LOG_INFO, sstc("Shader file opened: ",filePath).c_str()); }
+		Hlog(LOG_INFO, sstc("Shader file opened: ",filePath).c_str()); }
 
 	std::stringstream buffer;
 	buffer << file.rdbuf();
@@ -27,9 +27,9 @@ void Shader::check_compile_errors(GLuint shader, const std::string& type)
         if (!success)
         {
             glGetProgramInfoLog(shader, 1024, nullptr, infoLog);
-            log(LOG_ERROR, sstc("PROGRAM LINKING FAILED: ",infoLog).c_str()  );
+            Hlog(LOG_ERROR, sstc("PROGRAM LINKING FAILED: ",infoLog).c_str()  );
 		}
-		else { log(LOG_INFO, "PROGRAM LINKING PASS:"); }
+		else { Hlog(LOG_INFO, "PROGRAM LINKING PASS:"); }
     }
     else
     {
@@ -37,9 +37,9 @@ void Shader::check_compile_errors(GLuint shader, const std::string& type)
         if (!success)
         {
             glGetShaderInfoLog(shader, 1024, nullptr, infoLog);
-			log(LOG_ERROR, sstc(" SHADER COMPILATION FAILED:",infoLog).c_str());
+			Hlog(LOG_ERROR, sstc(" SHADER COMPILATION FAILED:",infoLog).c_str());
 		}
-		else { log(LOG_INFO, "SHADER COMPILATION PASS"); }
+		else { Hlog(LOG_INFO, "SHADER COMPILATION PASS"); }
     }
 }
 
@@ -51,12 +51,12 @@ void Shader::load_shader(const char* vFile, const char* fFile)
 
 	if (vShaderCode.empty() )
 	{
-		log(LOG_ERROR, "Shader source code is empty! vertex");
+		Hlog(LOG_ERROR, "Shader source code is empty! vertex");
 		return;
 	} 
 	if (fShaderCode.empty())
 	{
-		log(LOG_ERROR, "Shader source code is empty! fragment");
+		Hlog(LOG_ERROR, "Shader source code is empty! fragment");
 		return;
 	}
 
