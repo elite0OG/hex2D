@@ -158,12 +158,14 @@
     <ClCompile Include="packages\imgui\lib\imgui_tables.cpp" />
     <ClCompile Include="packages\imgui\lib\imgui_widgets.cpp" />
     <ClCompile Include="src\application.cpp" />
+    <ClCompile Include="src\DxRenderer.cpp" />
     <ClCompile Include="src\ShaderClass.cpp" />
-    <ClCompile Include="src\renderer.cpp" />
+    <ClCompile Include="src\GLRenderer.cpp" />
     <ClCompile Include="src\WindowHandel.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="headers\renderer.h" />
+    <ClInclude Include="headers\DxRenderer.h" />
+    <ClInclude Include="headers\GLRenderer.h" />
     <ClInclude Include="headers\ShaderClass.h" />
     <ClInclude Include="headers\WindowHandel.h" />
   </ItemGroup>

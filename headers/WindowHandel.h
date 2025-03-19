@@ -1,14 +1,19 @@
 #pragma once
 
-#include"renderer.h"
+#include"GLRenderer.h"
 #define API_GL 0
 #define API_DIRECTX 1
 
-#include<Windows.h>
-#include<d3d11.h>
-#include <dxgi.h>
 #define GLFW_EXPOSE_NATIVE_WIN32
+#include <GLFW/glfw3.h>
 #include <GLFW/glfw3native.h>
+#include <d3d11.h>
+#include <dxgi.h>
+#include <iostream>
+
+#pragma comment(lib, "d3d11.lib")
+#pragma comment(lib, "dxgi.lib")
+
 static bool brak = false;
 static bool glfwInitialized = false;
 class WindowHandel
@@ -26,9 +31,13 @@ public:
 	uint32_t GetApiClint();
 
 	// DirectX Objects
-	IDXGISwapChain* pSwap = nullptr;
-	ID3D11Device* pDevice = nullptr;
+	DXGI_SWAP_CHAIN_DESC sd = {0};
+	D3D_FEATURE_LEVEL featureLevel;
+	ID3D11Device* pDevice = nullptr;	
 	ID3D11DeviceContext* pContext = nullptr;
+	IDXGISwapChain* pSwap = nullptr;
+	ID3D11RenderTargetView* pTarget = NULL;
+
 private:
 	GLFWwindow* window;
 	glm::ivec2 winsize;
@@ -44,7 +53,7 @@ private:
 	float currentTime = 0.f;
 
 
-	// DX stuff
+	
 	
 	uint32_t api;
 };

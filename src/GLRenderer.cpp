@@ -2,7 +2,7 @@
 
 //glViewport
 
-#include "renderer.h"
+#include "GLRenderer.h"
  
 void Hlog(unsigned int LOG, const char* v)
 {
@@ -48,10 +48,10 @@ std::string sstc(std::string t1, std::string t2)
 	return (t1 + t2);
 }
  
-void Renderer::init(WindowHandel handel)
+void GLRenderer::init(WindowHandel& handel)
 {
-	h = handel;
-	if(handel.GetApiClint() == API_GL){
+	this->h = handel;
+	 {
 
 		verticis =
 		{
@@ -90,42 +90,43 @@ void Renderer::init(WindowHandel handel)
 		ImGui_ImplOpenGL3_Init("#version 460");  // Use your GLSL version
 
 	}
+	 
 }
 
  
 
-void Renderer::ShutDown()
+void GLRenderer::ShutDown()
 {
-	Hlog(LOG_INFO, "Renderer closed successfully");
+	Hlog(LOG_INFO, "GLRenderer closed successfully");
 
-	if (h.GetApiClint() == API_GL)  // OpenGL shutdown
-	{
+	 
 		glDeleteBuffers(1, &m_VBO);
 		glDeleteBuffers(1, &m_EBO);
 		glDeleteVertexArrays(1, &m_VAO);
 		ImGui_ImplOpenGL3_Shutdown();
-	}
+		if (ImGui::GetCurrentContext()) {
+			ImGui_ImplGlfw_Shutdown();
+			ImGui::DestroyContext();
+		}
+	
 
-	if (ImGui::GetCurrentContext()) {
-		ImGui_ImplGlfw_Shutdown();
-		ImGui::DestroyContext();
-	}
+	
 }
 
-void Renderer::RendererHint(unsigned int hint, int value)
+void GLRenderer::GLRendererHint(unsigned int hint, int value)
 {
-	if (hint == DEFALT_RENDERER_TYPE && value == 4)
+	if (hint == DEFALT_GLRenderer_TYPE && value == 4)
 	{
-		Hlog(LOG_INFO, "THE RENDERER WILL ONLY GOING TO DRAW QUAD! AND TRIANGLES ARE THE PART OF THE QUAD");
+		Hlog(LOG_INFO, "THE GLRenderer WILL ONLY GOING TO DRAW QUAD! AND TRIANGLES ARE THE PART OF THE QUAD");
 	}
 	else {
-		Hlog(LOG_WARN, "RENDERER IS UNABLE TO RECOGNIZE THE RENDERING TYPE DEFALT TYPE IS SETED!"); 
+		Hlog(LOG_WARN, "GLRenderer IS UNABLE TO RECOGNIZE THE RENDERING TYPE DEFALT TYPE IS SETED!"); 
 		value = 4;
-		hint = DEFALT_RENDERER_TYPE;
+		hint = DEFALT_GLRenderer_TYPE;
 	}
 }
 
-void Renderer::DrawTriangle(glm::vec3 pos, glm::vec4 color)
+void GLRenderer::DrawTriangle(glm::vec3 pos, glm::vec4 color)
 {
 	if(isdrawablity){
 		shader.use();
@@ -139,7 +140,7 @@ void Renderer::DrawTriangle(glm::vec3 pos, glm::vec4 color)
 	}
 }
 
-void Renderer::DrawQuad(glm::vec3 pos, glm::vec4 color)
+void GLRenderer::DrawQuad(glm::vec3 pos, glm::vec4 color)
 {
 	if(isdrawablity){
 		shader.use();
@@ -154,7 +155,7 @@ void Renderer::DrawQuad(glm::vec3 pos, glm::vec4 color)
 	}
 }
 
-void Renderer::DrawTriangleV(glm::vec3 pos, glm::vec2 size, glm::vec2 RotetionAngle, float angle, glm::vec4 color)
+void GLRenderer::DrawTriangleV(glm::vec3 pos, glm::vec2 size, glm::vec2 RotetionAngle, float angle, glm::vec4 color)
 {
 	if (isdrawablity) {
 		shader.use();
@@ -170,7 +171,7 @@ void Renderer::DrawTriangleV(glm::vec3 pos, glm::vec2 size, glm::vec2 RotetionAn
 	}
 }
 
-void Renderer::DrawQuadV(glm::vec3 pos, glm::vec2 size, glm::vec2 RotetionAngle, float angle, glm::vec4 color)
+void GLRenderer::DrawQuadV(glm::vec3 pos, glm::vec2 size, glm::vec2 RotetionAngle, float angle, glm::vec4 color)
 {
 	if (isdrawablity) {
 		shader.use();
@@ -190,14 +191,14 @@ void Renderer::DrawQuadV(glm::vec3 pos, glm::vec2 size, glm::vec2 RotetionAngle,
 	}
 }
 
-void Renderer::load_PVM()
+void GLRenderer::load_PVM()
 {
 	glUniformMatrix4fv(glGetUniformLocation(shader.GetID(), "P"), 1, GL_FALSE, glm::value_ptr(projection));
 	glUniformMatrix4fv(glGetUniformLocation(shader.GetID(), "V"), 1, GL_FALSE, glm::value_ptr(view));
 	glUniformMatrix4fv(glGetUniformLocation(shader.GetID(), "M"), 1, GL_FALSE, glm::value_ptr(model));
 }
 
-void Renderer::ClearBackground(glm::vec4 color) 
+void GLRenderer::ClearBackground(glm::vec4 color) 
 {
 	if(isdrawablity){
 		glClearColor(color.x/255.f, color.y / 255.f, color.z / 255.f, color.w / 255.f);
@@ -205,12 +206,12 @@ void Renderer::ClearBackground(glm::vec4 color)
 	}
 }
 
-void Renderer::beginDrawing()
+void GLRenderer::beginDrawing()
 {
 	isdrawablity = true;
 	glfwPollEvents();
 
-	if (h.GetApiClint() == API_GL) {
+	 
 		glDisable(GL_CULL_FACE);
 		glEnable(GL_DEPTH_TEST);
 
@@ -221,35 +222,20 @@ void Renderer::beginDrawing()
 
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	}
-	else if (h.GetApiClint() == API_DIRECTX) {
-		if (!h.pContext || !h.pSwap) return; // ✅ Prevents crash if DX is not initialized
-
-		// ✅ Initialize ImGui Frame for DirectX
-		//ImGui_ImplDX11_NewFrame();
-		ImGui_ImplGlfw_NewFrame();
-		ImGui::NewFrame();
-	}
+	 
+	 
 }
 
-void Renderer::endDrawing() {
-	if (h.GetApiClint() == API_GL) {
+void GLRenderer::endDrawing() {
+	 
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		glfwSwapBuffers(h.GetHandel());
-	}
-	else if (h.GetApiClint() == API_DIRECTX) {
-		if (!h.pContext || !h.pSwap || glfwWindowShouldClose(h.GetHandel())) return;  // ✅ Prevent access after shutdown
-
-		// ✅ Ensure ImGui rendering for DirectX
-		ImGui::Render();
-		//ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
-
-		h.pSwap->Present(1, 0);
-	}
+	
+	 
 }
 
-void Renderer::DrawTextHex(const char* s, glm::vec2 pos, glm::vec4 color)
+void GLRenderer::DrawTextHex(const char* s, glm::vec2 pos, glm::vec4 color)
 {
 	
 
@@ -262,7 +248,7 @@ void Renderer::DrawTextHex(const char* s, glm::vec2 pos, glm::vec4 color)
 	
 }
 
-void Renderer::PrintProjection()
+void GLRenderer::PrintProjection()
 {
 	Hlog(LOG_INFO, ("Projection: " + glm::to_string(projection)).c_str());
 }

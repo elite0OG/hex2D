@@ -1,7 +1,7 @@
 #pragma once
 #include<stdio.h>
 #include<GL/glew.h>
-#include<GLFW/glfw3.h>
+ 
 #define GLM_ENABLE_EXPERIMENTAL
 #include<glm/glm.hpp>
 #include<glm/gtc/matrix_transform.hpp>
@@ -13,13 +13,13 @@
 #include<string>
 #include<sstream>
 #include<iostream>
-#include"WindowHandel.h"
-#include"ShaderClass.h"
+
 #include<stb_image.h>
 #include <imgui.h>                // Core ImGui functions
 #include<imgui_impl_opengl3.h>
 #include<imgui_impl_glfw.h>
-
+#include"WindowHandel.h"
+#include"ShaderClass.h"
 
 #define LOG_INFO  0
 #define LOG_WARN  1
@@ -29,25 +29,22 @@
 #define BLUE  glm::vec4{0.f,0.f,255.f,1.f}
 #define CONBLUE glm::vec4{ 100.f, 149.f, 237.f, 255.f }
 #define HEXBLACK glm::vec4{ 27.f, 27.f, 27.f, 255.f }
-#define DEFALT_RENDERER_TYPE 0
- 
+#define DEFALT_GLRenderer_TYPE 0
 
-
-
-	void Hlog(unsigned int LOG, const char* v);
-	void Hlog(unsigned int LOG, std::string v);
+void Hlog(unsigned int LOG, const char* v);
+void Hlog(unsigned int LOG, std::string v);
 
 std::string sstc(std::string t1, std::string t2);
 
 
 
-class Renderer
+class GLRenderer
 {
 public:
-	void init(WindowHandel handel);
+	void init(WindowHandel& handel);
 	void ShutDown();
-	void RendererHint(unsigned int hint, int value);
-	/// pos.z don't work because renderer only use 2D so Z axis is useless it fallow for all drawcall!!
+	void GLRendererHint(unsigned int hint, int value);
+	/// pos.z don't work because GLRenderer only use 2D so Z axis is useless it fallow for all drawcall!!
 	void DrawTriangle(glm::vec3 pos , glm::vec4 color); 
 	void DrawQuad(glm::vec3 pos, glm::vec4 color);
 
@@ -67,7 +64,7 @@ private:
 	GLuint m_VAO;
 	GLuint m_VBO;   
 	GLuint m_EBO;
-	glm::vec2 rendersize;
+	 
 	glm::mat4 model = glm::mat4(1.f);
 	glm::mat4 projection = glm::ortho(0.0f, 800.0f, 600.0f, 0.0f, -1.0f, 1.0f);
 	 
@@ -76,11 +73,8 @@ private:
 
 	bool isdrawablity = false;
 
-	//GLFWwindow* handel;
+	 
 	WindowHandel h;
-	//GLTtext* text = gltCreateText();
-	//GLuint fontTexture;
-	//stbtt_bakedchar charData[96];
-	//stbtt_aligned_quad q;
+	 
 	 
 };

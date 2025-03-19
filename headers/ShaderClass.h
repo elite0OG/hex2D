@@ -1,6 +1,6 @@
 #pragma once
 
-#include"renderer.h"
+#include"GLRenderer.h"
 
 class Shader
 {

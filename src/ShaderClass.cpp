@@ -1,4 +1,4 @@
-#include "renderer.h"
+#include "GLRenderer.h"
  
 std::string Shader::read_file(const char* filePath)
 {

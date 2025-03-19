@@ -1,10 +1,10 @@
-﻿#define DEBUG_INFO
-#include"renderer.h"
- 
+﻿#define USE_DIRECTX
+#include"GLRenderer.h"
+#include"DxRenderer.h" 
 
 
 WindowHandel handel;
-Renderer renderer;
+ 
 
 bool CheckCollision(glm::vec2 posA, glm::vec2 sizeA, glm::vec2 posB, glm::vec2 sizeB) {
     return (posA.x < posB.x + sizeB.x &&
@@ -14,19 +14,25 @@ bool CheckCollision(glm::vec2 posA, glm::vec2 sizeA, glm::vec2 posB, glm::vec2 s
 }
 int main()
 {
+    
+    handel.init(800, 600, "Hex2D example 1", API_DIRECTX);
+    DxGLRenderer renderer;
+    //handel.init(800, 600, "Hex2D example 1", API_GL);
+    //GLRenderer renderer;
 
-    handel.init(800, 600, "Hex2D example 1", API_GL);
+
     renderer.init(handel);
-    renderer.RendererHint(DEFALT_RENDERER_TYPE, 4);
+    //GLRenderer.GLRendererHint(DEFALT_GLRenderer_TYPE, 4);
      
     while (!glfwWindowShouldClose(handel.GetHandel()))
     {
-        
-        handel.UpdatehandelDelta();
+
+        //glfwPollEvents();
         renderer.beginDrawing();
-        renderer.ClearBackground(HEXBLACK);
-        renderer.DrawTriangle(glm::vec3(400.f, 300.f, 0.f), CONBLUE);
-        renderer.endDrawing();
+        renderer.ClearBackground(CONBLUE);
+        //renderer.DrawTriangle(glm::vec3(400.f, 300.f, 0.f), CONBLUE);
+       renderer.endDrawing();
+       
     }
 
     renderer.ShutDown();   
@@ -39,8 +45,8 @@ int main()
 //{
 //
 //    handel.init(800, 600, "Hex2D example 1",API_DIRECTX);
-//    renderer.init(handel);
-//    renderer.RendererHint(DEFALT_RENDERER_TYPE, 4);
+//    GLRenderer.init(handel);
+//    GLRenderer.GLRendererHint(DEFALT_GLRenderer_TYPE, 4);
 //
 //    glm::vec3 pos = glm::vec3{ 400.f,300.f,0.f};
 //    glm::vec2 size = glm::vec2{ 100.f,100.f};
@@ -63,13 +69,13 @@ int main()
 //        else if (glfwGetKey(handel.GetHandel(), GLFW_KEY_S) == GLFW_PRESS) pos.y += 400.f * handel.GetDeltaT();
 //
 //      
-//        renderer.beginDrawing();
+//        GLRenderer.beginDrawing();
 //       
-//       // renderer.ClearBackground(HEXBLACK);
+//       // GLRenderer.ClearBackground(HEXBLACK);
 //
 //        
-//       // renderer.DrawQuadV(pos, size, vec2Zero, 0.f, RED);
-//        //renderer.DrawQuadV(pos2, size2, vec2Zero, 0.f, BLUE);
+//       // GLRenderer.DrawQuadV(pos, size, vec2Zero, 0.f, RED);
+//        //GLRenderer.DrawQuadV(pos2, size2, vec2Zero, 0.f, BLUE);
 //  
 //       // ImGui::Begin("Hex win");
 //       // ImGui::Text(("FPS: " + std::to_string(handel.GetFPS())).c_str());
@@ -83,10 +89,10 @@ int main()
 //
 //        //Finish drawing text
 //        //gltEndDraw();
-//        renderer.endDrawing();
+//        GLRenderer.endDrawing();
 //      
 //    }
-//    renderer.ShutDown();
+//    GLRenderer.ShutDown();
 //    handel.ShutDown();
 //    //gltDeleteText(text);
 //    return 0;
