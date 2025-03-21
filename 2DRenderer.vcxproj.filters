@@ -56,6 +56,18 @@
     <ClCompile Include="src\DxRenderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\PhysicsSys.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\logger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="packages\imgui\lib\imgui_impl_dx11.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="packages\imgui\lib\imgui_impl_win32.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headers\GLRenderer.h">
@@ -70,5 +82,15 @@
     <ClInclude Include="headers\DxRenderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="headers\PhysicsSys.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\logger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Resources\Shaders\def_vert.hlsl" />
+    <FxCompile Include="Resources\Shaders\def_frag.hlsl" />
   </ItemGroup>
 </Project>

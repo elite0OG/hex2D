@@ -2,7 +2,11 @@
 //the include GLRenderer.h give the Dx11 renderer same definations and includes that it need to work 
 #include"GLRenderer.h"
 #include"WindowHandel.h"
-class DxGLRenderer
+#include"logger.h"
+#include<imgui_impl_win32.h>
+#include<imgui_impl_dx11.h>
+
+class DxRenderer
 {
 public:
     void init(WindowHandel& handle); // Fixed spelling
@@ -15,12 +19,35 @@ public:
     void DrawQuadV(glm::vec3 pos, glm::vec2 size, glm::vec2 RotationAngle, float angle, glm::vec4 color);
 
     void load_PVM();
-
+    bool v = true;
     void ClearBackground(glm::vec4 color);
     void beginDrawing();
     void endDrawing();
+  
 
 private:
+    HRESULT hr;
     WindowHandel h; // Ensure WindowHandel is properly defined
-    float Color[4];
+    float Color[4] = {0.f,0.f,0.f,0.f};
+  
+    struct Vertex
+    {
+        float x;
+        float y;
+
+        float r;
+        float g;
+		float b;
+    };
+	struct ConstantBuffer
+	{
+		DirectX::XMMATRIX transform;
+        DirectX::XMMATRIX orth;
+		DirectX::XMVECTOR uColor;
+	};
+    ConstantBuffer cb;
+    wrl::ComPtr<ID3D11Buffer> pConstantBuffer;
+    D3D11_BUFFER_DESC cbd = {};
+    D3D11_SUBRESOURCE_DATA csd = {};
+   // std::array<Vertex, 3> vertices;
 };

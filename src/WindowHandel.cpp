@@ -1,5 +1,5 @@
 #include"GLRenderer.h"
-
+namespace wrl = Microsoft::WRL;
 
 void WindowHandel::setParas()
 {
@@ -70,7 +70,7 @@ void WindowHandel::initDX(GLFWwindow* window) {
     }
 
     // Create the render target view
-    hr = pDevice->CreateRenderTargetView(pBackBuffer, NULL, &pTarget);
+    hr = pDevice->CreateRenderTargetView(pBackBuffer, NULL, pTarget.GetAddressOf());
     if (FAILED(hr)) {
         Hlog(LOG_ERROR, "Failed to create render target view.");
     }
@@ -137,20 +137,21 @@ void WindowHandel::init(int width, int height, const char* title,uint32_t clint)
        Hlog(LOG_INFO, "use DxRenderer for directx rendering instad of GLRenderer"); 
        initDX(window);
    }
-   glfwSwapInterval(1);
+	
 }
 
 void WindowHandel::ShutDown() {
-    if (pTarget != NULL)pTarget->Release();
+    //if (pTarget != NULL)pTarget->Release();
     if (pSwap != NULL) pSwap->Release();
-    if (pDevice) pDevice->Release();
-    if (pContext != NULL) pContext->Release();
+    //if (pDevice) pDevice->Release();
+    //if (pContext != NULL) pContext->Release();
     glfwDestroyWindow(window);
     glfwTerminate();
 }
 
 void WindowHandel::UpdatehandelDelta()
 {
+    
     currentTime = (float)glfwGetTime();
     deltaTime = currentTime - lastFrameTime;
     lastFrameTime = currentTime;

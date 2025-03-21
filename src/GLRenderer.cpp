@@ -3,45 +3,9 @@
 //glViewport
 
 #include "GLRenderer.h"
+
+
  
-void Hlog(unsigned int LOG, const char* v)
-{
-	switch (LOG) {
-	case LOG_INFO:
-		printf("\x1b[32mLOG_INFO: %s\n\x1b[0m", v);
-		break;
-	case LOG_WARN:
-		printf("\x1b[33mLOG_WARN: %s\n\x1b[0m", v);
-		break;
-	case LOG_ERROR:
-		printf("\x1b[31mLOG_ERROR: %s\n\x1b[0m", v);
-		break;
-	default:
-		printf("\x1b[37mLOG_NOR: %s\n\x1b[0m", v);
-		break;
-	}
-	
-}
-
-void Hlog(unsigned int LOG, std::string v)
-{
-
-	switch (LOG) {
-	case LOG_INFO:
-		std::cout << "\x1b[32mLOG_INFO: " << v << "\x1b[0m\n";
-		break;
-	case LOG_WARN:
-		std::cout << "\x1b[33mLOG_WARN: " << v << "\x1b[0m\n";
-		break;
-	case LOG_ERROR:
-		std::cout << "\x1b[31mLOG_ERROR: " << v << "\x1b[0m\n";
-		break;
-	default:
-		std::cout << "\x1b[37mLOG_NOR: " << v << "\x1b[0m\n";  // Default case
-		break;
-	}
-}
-
 std::string sstc(std::string t1, std::string t2)
 {
 
@@ -113,18 +77,7 @@ void GLRenderer::ShutDown()
 	
 }
 
-void GLRenderer::GLRendererHint(unsigned int hint, int value)
-{
-	if (hint == DEFALT_GLRenderer_TYPE && value == 4)
-	{
-		Hlog(LOG_INFO, "THE GLRenderer WILL ONLY GOING TO DRAW QUAD! AND TRIANGLES ARE THE PART OF THE QUAD");
-	}
-	else {
-		Hlog(LOG_WARN, "GLRenderer IS UNABLE TO RECOGNIZE THE RENDERING TYPE DEFALT TYPE IS SETED!"); 
-		value = 4;
-		hint = DEFALT_GLRenderer_TYPE;
-	}
-}
+ 
 
 void GLRenderer::DrawTriangle(glm::vec3 pos, glm::vec4 color)
 {
@@ -227,7 +180,10 @@ void GLRenderer::beginDrawing()
 }
 
 void GLRenderer::endDrawing() {
-	 
+	if (v)
+	{
+		glfwSwapInterval(1);
+	}else glfwSwapInterval(0);
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		glfwSwapBuffers(h.GetHandel());

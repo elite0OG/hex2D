@@ -1,38 +1,48 @@
-﻿#define USE_DIRECTX
-#include"GLRenderer.h"
+﻿#include"GLRenderer.h"
 #include"DxRenderer.h" 
-
+#include"PhysicsSys.h"
 
 WindowHandel handel;
  
 
-bool CheckCollision(glm::vec2 posA, glm::vec2 sizeA, glm::vec2 posB, glm::vec2 sizeB) {
-    return (posA.x < posB.x + sizeB.x &&
-        posA.x + sizeA.x > posB.x &&
-        posA.y < posB.y + sizeB.y &&
-        posA.y + sizeA.y > posB.y);
-}
+ //total day worked in the project 4 days 
 int main()
 {
     
-    handel.init(800, 600, "Hex2D example 1", API_DIRECTX);
-    DxGLRenderer renderer;
-    //handel.init(800, 600, "Hex2D example 1", API_GL);
+    handel.init(800, 600, "Hex2D example 1 DX", API_DIRECTX);
+    DxRenderer renderer;
+    //handel.init(800, 600, "Hex2D example 1 GL", API_GL);
     //GLRenderer renderer;
 
-
+    
     renderer.init(handel);
-    //GLRenderer.GLRendererHint(DEFALT_GLRenderer_TYPE, 4);
      
+	glm::vec3 pos = glm::vec3{ 0.f,0.f,0.f };
     while (!glfwWindowShouldClose(handel.GetHandel()))
     {
-
-        //glfwPollEvents();
+        handel.UpdatehandelDelta();
         renderer.beginDrawing();
-        renderer.ClearBackground(CONBLUE);
-        //renderer.DrawTriangle(glm::vec3(400.f, 300.f, 0.f), CONBLUE);
+        renderer.ClearBackground(HEXBLACK);
+        if (glfwGetKey(handel.GetHandel(), GLFW_KEY_W) == GLFW_PRESS) pos.y -= 200.0f * handel.GetDeltaT();
+        if (glfwGetKey(handel.GetHandel(), GLFW_KEY_S) == GLFW_PRESS) pos.y += 200.0f * handel.GetDeltaT();
+        if (glfwGetKey(handel.GetHandel(), GLFW_KEY_A) == GLFW_PRESS) pos.x -= 200.0f * handel.GetDeltaT();
+        if (glfwGetKey(handel.GetHandel(), GLFW_KEY_D) == GLFW_PRESS) pos.x += 200.0f * handel.GetDeltaT();
+
+        renderer.DrawTriangle(glm::vec3(400.f, 300.f, 0.f), BLUE);
+       renderer.DrawQuad(pos, RED);
+        
+		
+        ImGui::Begin("Sys info");
+       ImGui::Text(sstc("FPS: ", std::to_string(handel.GetFPS())).c_str());
+        ImGui::Checkbox("Vsinc", &renderer.v);
+
+        ImGui::End();
+        if (renderer.v)
+                 renderer.v = true;
+        else   renderer.v = false; 
+        
        renderer.endDrawing();
-       
+        
     }
 
     renderer.ShutDown();   

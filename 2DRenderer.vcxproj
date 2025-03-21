@@ -153,12 +153,16 @@
     <ClCompile Include="packages\imgui\lib\imgui.cpp" />
     <ClCompile Include="packages\imgui\lib\imgui_demo.cpp" />
     <ClCompile Include="packages\imgui\lib\imgui_draw.cpp" />
+    <ClCompile Include="packages\imgui\lib\imgui_impl_dx11.cpp" />
     <ClCompile Include="packages\imgui\lib\imgui_impl_glfw.cpp" />
     <ClCompile Include="packages\imgui\lib\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="packages\imgui\lib\imgui_impl_win32.cpp" />
     <ClCompile Include="packages\imgui\lib\imgui_tables.cpp" />
     <ClCompile Include="packages\imgui\lib\imgui_widgets.cpp" />
     <ClCompile Include="src\application.cpp" />
     <ClCompile Include="src\DxRenderer.cpp" />
+    <ClCompile Include="src\logger.cpp" />
+    <ClCompile Include="src\PhysicsSys.cpp" />
     <ClCompile Include="src\ShaderClass.cpp" />
     <ClCompile Include="src\GLRenderer.cpp" />
     <ClCompile Include="src\WindowHandel.cpp" />
@@ -166,8 +170,24 @@
   <ItemGroup>
     <ClInclude Include="headers\DxRenderer.h" />
     <ClInclude Include="headers\GLRenderer.h" />
+    <ClInclude Include="headers\logger.h" />
+    <ClInclude Include="headers\PhysicsSys.h" />
     <ClInclude Include="headers\ShaderClass.h" />
     <ClInclude Include="headers\WindowHandel.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Resources\Shaders\def_frag.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\def_vert.hlsl">
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)%(Filename).cso</ObjectFileOutput>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+    </FxCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
