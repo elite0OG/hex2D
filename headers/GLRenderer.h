@@ -27,6 +27,7 @@
 #define BLUE  glm::vec4{0.f,0.f,255.f,1.f}
 #define CONBLUE glm::vec4{ 100.f, 149.f, 237.f, 255.f }
 #define HEXBLACK glm::vec4{ 27.f, 27.f, 27.f, 255.f }
+#define WHITE glm::vec4{ 255.f, 255.f, 255.f, 255.f }
 #define DEFALT_GLRenderer_TYPE 0
 
 
@@ -52,6 +53,8 @@ public:
 	void ClearBackground(glm::vec4 color);
 	void beginDrawing();
 	void endDrawing( );
+	void DrawImguiText(const char* text, glm::vec2 pos, float fontS);
+
 	void DrawTextHex(const char* s, glm::vec2 pos, glm::vec4 color);
 	//GLuint LoadFontTexture(const char* fontPath);
 	//void RenderText(const char* text, glm::vec2 pos, float scale);

@@ -134,7 +134,7 @@ void WindowHandel::init(int width, int height, const char* title,uint32_t clint)
 
    else if(clint == API_DIRECTX) 
    { 
-       Hlog(LOG_INFO, "use DxRenderer for directx rendering instad of GLRenderer"); 
+       Hlog(LOG_INFO, "Using DrectX Renderer ->  Dx11"); 
        initDX(window);
    }
 	

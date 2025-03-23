@@ -17,7 +17,7 @@ public:
     void DrawQuad(glm::vec3 pos, glm::vec4 color);
     void DrawTriangleV(glm::vec3 pos, glm::vec2 size, glm::vec2 RotationAngle, float angle, glm::vec4 color);
     void DrawQuadV(glm::vec3 pos, glm::vec2 size, glm::vec2 RotationAngle, float angle, glm::vec4 color);
-
+    void DrawImguiText(const char* text, glm::vec2 pos, float fontS);
     void load_PVM();
     bool v = true;
     void ClearBackground(glm::vec4 color);

@@ -150,6 +150,7 @@
     <None Include="Resources\Shaders\def_vert.glsl" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\InputHandel.cpp" />
     <ClCompile Include="packages\imgui\lib\imgui.cpp" />
     <ClCompile Include="packages\imgui\lib\imgui_demo.cpp" />
     <ClCompile Include="packages\imgui\lib\imgui_draw.cpp" />
@@ -170,6 +171,7 @@
   <ItemGroup>
     <ClInclude Include="headers\DxRenderer.h" />
     <ClInclude Include="headers\GLRenderer.h" />
+    <ClInclude Include="headers\InputHandel.h" />
     <ClInclude Include="headers\logger.h" />
     <ClInclude Include="headers\PhysicsSys.h" />
     <ClInclude Include="headers\ShaderClass.h" />

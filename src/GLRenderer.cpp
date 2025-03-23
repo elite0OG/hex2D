@@ -191,6 +191,21 @@ void GLRenderer::endDrawing() {
 	 
 }
 
+void GLRenderer::DrawImguiText(const char* text, glm::vec2 pos, float fontS)
+{
+	ImGui::SetNextWindowPos(ImVec2(pos.x, pos.y), ImGuiCond_Always);  // Top-left corner
+	//ImGui::SetWindowFontScale(fontS);
+	ImGui::SetNextWindowBgAlpha(0.f);
+	ImGui::Begin(text, nullptr,
+		ImGuiWindowFlags_NoTitleBar |
+		ImGuiWindowFlags_AlwaysAutoResize |
+		ImGuiWindowFlags_NoFocusOnAppearing |
+		ImGuiWindowFlags_NoBackground |
+		ImGuiWindowFlags_NoNav);
+	ImGui::Text(text);
+	ImGui::End();
+}
+
 void GLRenderer::DrawTextHex(const char* s, glm::vec2 pos, glm::vec4 color)
 {
 	

@@ -197,6 +197,51 @@ void DxRenderer::DrawQuad(glm::vec3 pos, glm::vec4 color)
     h.pContext->DrawIndexed(6, 0, 0);
 }
 
+void DxRenderer::DrawTriangleV(glm::vec3 pos, glm::vec2 size, glm::vec2 RotationAngle, float angle, glm::vec4 color)
+{
+    if(angle == 0.0  ){
+        DxRenderer::cb.transform = dx::XMMatrixTranspose(
+            dx::XMMatrixScaling(size.x, -size.y, 1.f) // Flip Y-axis scale      
+ * dx::XMMatrixTranslation(pos.x, pos.y, pos.z)
+        );
+	}
+	else { Hlog(LOG_WARN, "RotationAngle and angle must be 0.0f for DrawTriangleV()"); }
+    DxRenderer::cb.uColor = dx::XMVectorSet(color.x, color.y, color.z, color.w);
+
+    load_PVM();
+    h.pContext->DrawIndexed(3, 0, 0);
+}
+
+void DxRenderer::DrawQuadV(glm::vec3 pos, glm::vec2 size, glm::vec2 RotationAngle, float angle, glm::vec4 color)
+{
+    if (angle == 0.0) {
+        DxRenderer::cb.transform = dx::XMMatrixTranspose(
+            dx::XMMatrixScaling(size.x, -size.y, 1.f) // Flip Y-axis scale      
+            * dx::XMMatrixTranslation(pos.x, pos.y, pos.z)
+        );
+    }
+    else { Hlog(LOG_WARN, "RotationAngle and angle must be 0.0f for DrawTriangleV()"); }
+    DxRenderer::cb.uColor = dx::XMVectorSet(color.x, color.y, color.z, color.w);
+
+    load_PVM();
+    h.pContext->DrawIndexed(6, 0, 0);
+}
+
+void DxRenderer::DrawImguiText(const char* text, glm::vec2 pos, float fontS)
+{
+    ImGui::SetNextWindowPos(ImVec2(pos.x, pos.y), ImGuiCond_Always);  // Top-left corner
+    //ImGui::SetWindowFontScale(fontS);
+    ImGui::SetNextWindowBgAlpha(0.f);
+    ImGui::Begin(text, nullptr,
+        ImGuiWindowFlags_NoTitleBar |
+        ImGuiWindowFlags_AlwaysAutoResize |
+        ImGuiWindowFlags_NoFocusOnAppearing |
+        ImGuiWindowFlags_NoBackground |
+        ImGuiWindowFlags_NoNav);
+    ImGui::Text(text);
+    ImGui::End();
+}
+
 void DxRenderer::load_PVM()
 {
     
