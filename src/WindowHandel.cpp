@@ -106,9 +106,10 @@ void WindowHandel::init(int width, int height, const char* title,uint32_t clint)
     else if (clint == API_DIRECTX) {
        glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
     }
+    
 	window = glfwCreateWindow(width, height, title, NULL, NULL);
    
-    im.pixels = stbi_load("Resources/assets/logo2.png", &x, &y, &n,0);
+    im.pixels = stbi_load("Resources/assets/logo4.png", &x, &y, &n,0);
     if(im.pixels){
         im.width = x;
         im.height = y;
