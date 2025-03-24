@@ -3,8 +3,7 @@
 #include"GLRenderer.h"
 #include"WindowHandel.h"
 #include"logger.h"
-#include<imgui_impl_win32.h>
-#include<imgui_impl_dx11.h>
+ 
 
 class DxRenderer
 {

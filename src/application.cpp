@@ -7,6 +7,8 @@
 #include"DxRenderer.h" 
 #include"PhysicsSys.h"
 #include"InputHandel.h"
+#include <imgui.h>                // Core ImGui functions
+ 
 WindowHandel handel;
 namespace gui = ImGui;
 static float speed = 348.f;
@@ -41,18 +43,19 @@ void movementP2(glm::vec3& pos, float speed, float deltaT, GLFWwindow* handel, i
 int main()
 {
     
-    handel.init(800, 600, "Hex2D example 1 DX", API_DIRECTX);
+    handel.init(800, 600, "Hex2D PONG DX", API_DIRECTX);
     DxRenderer renderer;
 	
-    //handel.init(800, 600, "Hex2D example 1 GL", API_GL);
+   // handel.init(800, 600, "Hex2D PONG GL", API_GL);
     //GLRenderer renderer;
 
     
     renderer.init(handel);
     //input in(handel);
-    glm::vec2 size = glm::vec2{ 20.f,100.f };
-    glm::vec3 pos = glm::vec3{ size.x / 2.f, 400.f - size.y / 2.f, 0.f }; // Adjust if center-based
-    glm::vec3 pos2 = glm::vec3{ 800.f - size.x / 2.f, 400.f - size.y / 2.f, 0.f };
+	float pedding = 2.f;
+    glm::vec2 size = glm::vec2{ 12.f,100.f };
+    glm::vec3 pos = glm::vec3{ size.x / 2.f + pedding, 400.f - size.y , 0.f }; // Adjust if center-based
+    glm::vec3 pos2 = glm::vec3{ 800.f - size.x / 2.f - pedding, 400.f - size.y , 0.f };
 
     glm::vec3 pos3 = glm::vec3(400.f, 300.f, 0.f);
 	glm::vec2 velocity = glm::vec2(1.f, 1.f);
@@ -148,6 +151,7 @@ if(showUI)
 
     gui::Checkbox("Vsinc", &renderer.v);
     gui::SliderFloat("BSpeed", &Ballspeed, 50.f, 700.f);
+	//gui::SliderFloat("pedding", &pedding, 0.f, 10.f);
 	gui::Checkbox("ShowUI", &showUI);
     gui::End();
 

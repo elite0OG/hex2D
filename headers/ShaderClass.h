@@ -1,27 +1,24 @@
 #pragma once
 
-#include"GLRenderer.h"
-
+//#include"GLRenderer.h"
+#include<string>
 class Shader
 {
 public:
 
-	~Shader() {
-		glDeleteShader(m_VertexShader);
-		glDeleteShader(m_FragmentShader);
-		glDeleteProgram(m_ID);
-	}
+	~Shader();
+	 
 
 	void load_shader(const char* vFile, const char* fFile);
-	GLuint GetID() { return m_ID; }
-	void use() { glUseProgram(m_ID); }
+	unsigned int GetID();
+	void use();
 private:
 	const char* VertSource;
 	const char* FragSource;
-	GLuint m_ID;
-	GLuint m_VertexShader;
-	GLuint m_FragmentShader;
+	unsigned int  m_ID;
+	unsigned int m_VertexShader;
+	unsigned int m_FragmentShader;
 
 	std::string read_file(const char* filePath);
-	void check_compile_errors(GLuint shader, const std::string& type);
+	void check_compile_errors(unsigned int shader, const std::string& type);
 };

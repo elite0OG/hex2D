@@ -1,26 +1,23 @@
 #pragma once
 
-#include<GL/glew.h>
+
  
 #define GLM_ENABLE_EXPERIMENTAL
+
 #include<glm/glm.hpp>
 #include<glm/gtc/matrix_transform.hpp>
 #include<glm/gtc/type_ptr.hpp>
-#include <glm/gtx/string_cast.hpp>  
+#include<glm/gtx/string_cast.hpp>  
 #include<array>
 #include<vector>
 #include<fstream>
 #include<string>
 #include<sstream>
- 
-
-#include<stb_image.h>
-#include <imgui.h>                // Core ImGui functions
-#include<imgui_impl_opengl3.h>
-#include<imgui_impl_glfw.h>
-#include"WindowHandel.h"
 #include"ShaderClass.h"
+#include"WindowHandel.h"
 #include"logger.h"
+
+
 
 #define vec2Zero glm::vec2{0.f,0.f}
 #define RED  glm::vec4{255.f,0.f,0.f,1.f}

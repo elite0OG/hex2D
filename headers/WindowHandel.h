@@ -28,7 +28,7 @@ public:
 	void init(int width, int height, const char* title,uint32_t clint);
 	GLFWwindow* GetHandel() { return window; }
 	void ShutDown();
-	glm::vec2 GetWindowSize() { return winsize; }
+	glm::vec2 GetWindowSize() const { return winsize; }
 	void UpdatehandelDelta();
 	float GetDeltaT();
 	int GetFPS();

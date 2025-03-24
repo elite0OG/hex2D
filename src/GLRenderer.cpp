@@ -1,9 +1,12 @@
 ﻿#define STB_IMAGE_IMPLEMENTATION
-
+#include<GL/glew.h>
 //glViewport
 
 #include "GLRenderer.h"
-
+#include<stb_image.h>
+#include <imgui.h>                // Core ImGui functions
+#include<imgui_impl_opengl3.h>
+#include<imgui_impl_glfw.h>
 
  
 std::string sstc(std::string t1, std::string t2)

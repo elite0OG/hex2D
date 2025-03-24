@@ -1,5 +1,12 @@
-#include "GLRenderer.h"
- 
+#include "ShaderClass.h"
+#include <GL/glew.h>
+#include"GLRenderer.h"
+
+#include"logger.h"
+#include<string>
+#include<fstream>
+#include<sstream>
+
 std::string Shader::read_file(const char* filePath)
 {
 	std::ifstream file(filePath);
@@ -16,7 +23,7 @@ std::string Shader::read_file(const char* filePath)
 	return buffer.str();
 }
 
-void Shader::check_compile_errors(GLuint shader, const std::string& type)
+void Shader::check_compile_errors(unsigned int shader, const std::string& type)
 {
     GLint success;
     char infoLog[1024];
@@ -41,6 +48,15 @@ void Shader::check_compile_errors(GLuint shader, const std::string& type)
 		}
 		else { Hlog(LOG_INFO, "SHADER COMPILATION PASS"); }
     }
+}
+
+Shader::~Shader()
+{
+	 
+		glDeleteShader(m_VertexShader);
+		glDeleteShader(m_FragmentShader);
+		glDeleteProgram(m_ID);
+	
 }
 
 void Shader::load_shader(const char* vFile, const char* fFile)
@@ -86,4 +102,14 @@ void Shader::load_shader(const char* vFile, const char* fFile)
 	// Delete shaders after linking
 	glDeleteShader(m_VertexShader);
 	glDeleteShader(m_FragmentShader);
+}
+
+unsigned int Shader::GetID()
+{
+	return m_ID;
+}
+
+void Shader::use()
+{
+	 glUseProgram(m_ID); 
 }
