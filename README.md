@@ -1,6 +1,6 @@
 
 # Hex2d
-![logo-gray](https://github.com/user-attachments/assets/3f5dd0aa-04ae-4af1-9b92-ed83fae93d63)
+![logo-gray]( https://elite0og.github.io/eliteWiki/logo4.png)
 
 
 ### Features
