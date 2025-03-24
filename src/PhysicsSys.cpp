@@ -1,3 +1,4 @@
+#include<GLFW/glfw3.h>
 #include"PhysicsSys.h"
 
 bool phy::CheckCollisionRec(glm::vec2 posA, glm::vec2 sizeA, glm::vec2 posB, glm::vec2 sizeB)

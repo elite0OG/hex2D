@@ -1,18 +1,19 @@
 #pragma once
 
 
- 
+#define WIN32_LEAN_AND_MEAN 
 #define GLM_ENABLE_EXPERIMENTAL
-
 #include<glm/glm.hpp>
 #include<glm/gtc/matrix_transform.hpp>
 #include<glm/gtc/type_ptr.hpp>
 #include<glm/gtx/string_cast.hpp>  
+
 #include<array>
 #include<vector>
 #include<fstream>
 #include<string>
 #include<sstream>
+
 #include"ShaderClass.h"
 #include"WindowHandel.h"
 #include"logger.h"
@@ -57,11 +58,11 @@ public:
 	//void RenderText(const char* text, glm::vec2 pos, float scale);
 	void PrintProjection();
 private:
-	std::array<GLfloat, 12> verticis;
+	std::array<float, 12> verticis;
 	const unsigned int indices[6] = {1, 2, 3,0, 1, 3};
-	GLuint m_VAO;
-	GLuint m_VBO;   
-	GLuint m_EBO;
+	unsigned int m_VAO;
+	unsigned int m_VBO;   
+	unsigned int m_EBO;
 	 
 	glm::mat4 model = glm::mat4(1.f);
 	glm::mat4 projection = glm::ortho(0.0f, 800.0f, 600.0f, 0.0f, -1.0f, 1.0f);

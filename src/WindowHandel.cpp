@@ -1,3 +1,4 @@
+#define WIN32_LEAN_AND_MEAN 
 #include"GL/glew.h"
 #include"GLRenderer.h"
 
@@ -9,12 +10,15 @@ namespace wrl = Microsoft::WRL;
 #define GLFW_EXPOSE_NATIVE_WIN32
 #include <GLFW/glfw3.h>
 #include <GLFW/glfw3native.h>
+
 #include <d3d11.h>
 #include <dxgi.h>
 #include <iostream>
+#include "WindowHandel.h"
 
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "dxgi.lib")
+static GLFWimage im = { 0 };
 
 void WindowHandel::setParas()
 {
@@ -83,6 +87,7 @@ void WindowHandel::initDX(GLFWwindow* window) {
 
     // Release the back buffer reference (no longer needed)
     pBackBuffer->Release();
+    lastFrameTime = (float)glfwGetTime();
 }
 
 
@@ -91,14 +96,14 @@ void WindowHandel::init(int width, int height, const char* title,uint32_t clint)
     winsize = glm::ivec2(width, height);
     api = clint;
     Hlog(LOG_INFO, "USING HEX_2D");
-    if (!glfwInitialized) {
+     {
         if (!glfwInit()) {
             Hlog(LOG_ERROR, "GLFW initialization failed!");
             return;
-        }
-        glfwInitialized = true;
+        }else { Hlog(LOG_INFO, "GLFW loaded successfully!"); }
+         
     }
-    else { Hlog(LOG_INFO, "GLFW loaded successfully!"); }
+     
 
     if (clint == API_GL) {
         setParas();
@@ -147,6 +152,11 @@ void WindowHandel::init(int width, int height, const char* title,uint32_t clint)
 	
 }
 
+GLFWwindow* WindowHandel::GetHandel()
+{
+     return window; 
+}
+
 void WindowHandel::ShutDown() {
     //if (pTarget != NULL)pTarget->Release();
     if (pSwap != NULL) pSwap->Release();
@@ -186,4 +196,9 @@ glm::vec2 WindowHandel::GetScreenSize()
 uint32_t WindowHandel::GetApiClint()
 {
     return api;
+}
+
+bool WindowHandel::WindowShouldClose()
+{
+     return glfwWindowShouldClose(window); 
 }

@@ -4,9 +4,7 @@
 #define API_GL 0
 #define API_DIRECTX 1
 
-#define GLFW_EXPOSE_NATIVE_WIN32
-#include <GLFW/glfw3.h>
-#include <GLFW/glfw3native.h>
+
 #include <d3d11.h>
 #include <dxgi.h>
 #include <d3dcompiler.h>
@@ -19,14 +17,16 @@
 #pragma comment(lib, "D3DCompiler.lib")	
 
 static bool brak = false;
-static bool glfwInitialized = false;
+ 
 namespace wrl = Microsoft::WRL;
+struct GLFWwindow; // Forward declaration
+
 class WindowHandel
 {
 public:
 	 
 	void init(int width, int height, const char* title,uint32_t clint);
-	GLFWwindow* GetHandel() { return window; }
+	GLFWwindow* GetHandel();
 	void ShutDown();
 	glm::vec2 GetWindowSize() const { return winsize; }
 	void UpdatehandelDelta();
@@ -34,7 +34,7 @@ public:
 	int GetFPS();
 	glm::vec2 GetScreenSize();
 	uint32_t GetApiClint();
-	
+	bool WindowShouldClose();
 	// DirectX Objects
 	DXGI_SWAP_CHAIN_DESC sd = {0};
 	D3D_FEATURE_LEVEL featureLevel;
@@ -45,21 +45,17 @@ public:
 	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> pTarget;
 
 private:
+	// Window
 	GLFWwindow* window;
 	glm::ivec2 winsize;
 	HWND hwnd;
-
-	GLFWimage im = { 0 };
 	int x, y, n;
 	void setParas();
 	void initDX(GLFWwindow* window);
-	
-	float lastFrameTime = (float)glfwGetTime();
+	// Time
+	float lastFrameTime =  0.f;
 	float deltaTime = 0.0f;
 	float currentTime = 0.f;
-
-
-	
-	
+	//api stuff
 	uint32_t api;
 };

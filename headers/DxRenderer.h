@@ -1,5 +1,6 @@
 #pragma once
 //the include GLRenderer.h give the Dx11 renderer same definations and includes that it need to work 
+#define WIN32_LEAN_AND_MEAN 
 #include"GLRenderer.h"
 #include"WindowHandel.h"
 #include"logger.h"

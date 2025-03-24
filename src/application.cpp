@@ -27,17 +27,18 @@ void ShowOverlay(glm::vec2 pos,const char* c) {
 
 }
 
+
 void movementP1(glm::vec3& pos, float speed, float deltaT, GLFWwindow* handel,int re) {
     if(re != 1)
-        if (glfwGetKey(handel, GLFW_KEY_W) == GLFW_PRESS) pos.y -= speed * deltaT;
+        if ( GetKey(handel,KEY_W,MODE_PRESS) )pos.y -= speed * deltaT;
     if(re != 2 )   
-        if (glfwGetKey(handel, GLFW_KEY_S) == GLFW_PRESS) pos.y += speed * deltaT;
+        if (GetKey(handel,KEY_S,MODE_PRESS)) pos.y += speed * deltaT;
 }
 void movementP2(glm::vec3& pos, float speed, float deltaT, GLFWwindow* handel, int re) {
     if (re != 1)
-        if (glfwGetKey(handel, GLFW_KEY_UP) == GLFW_PRESS) pos.y -= speed * deltaT;
+        if (GetKey(handel,KEY_UP,MODE_PRESS)) pos.y -= speed * deltaT;
     if (re != 2)
-        if (glfwGetKey(handel, GLFW_KEY_DOWN) == GLFW_PRESS) pos.y += speed * deltaT;
+        if ( GetKey(handel,KEY_DOWN,MODE_PRESS)) pos.y += speed * deltaT;
 }
  
 int main()
@@ -45,9 +46,10 @@ int main()
     
     handel.init(800, 600, "Hex2D PONG DX", API_DIRECTX);
     DxRenderer renderer;
+    
 	
-   // handel.init(800, 600, "Hex2D PONG GL", API_GL);
-    //GLRenderer renderer;
+    //handel.init(800, 600, "Hex2D PONG GL", API_GL);
+   // GLRenderer renderer;
 
     
     renderer.init(handel);
@@ -63,13 +65,13 @@ int main()
     int re;
     bool showUI = false;
 	int o = 0;
-    while (!glfwWindowShouldClose(handel.GetHandel()))
+    while (!handel.WindowShouldClose())
     {
         handel.UpdatehandelDelta();
      /*   velocity.x += Ballspeed * handel.GetDeltaT();
         velocity.y += Ballspeed * handel.GetDeltaT();*/
        
-        if(glfwGetKey(handel.GetHandel(),GLFW_KEY_SPACE) == GLFW_PRESS  || o == 1){
+        if( GetKey(handel.GetHandel(),KEY_SPACE,MODE_PRESS) || o == 1) {
 			if (o == 0)
 			{
 				o = 1;
@@ -169,7 +171,7 @@ else {
        renderer.endDrawing();
         
     }
-
+    
     renderer.ShutDown();   
     handel.ShutDown();     
 
