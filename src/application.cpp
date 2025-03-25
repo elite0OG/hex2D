@@ -65,6 +65,7 @@ int main()
     int re;
     bool showUI = false;
 	int o = 0;
+    int ch = 1;
     while (!handel.WindowShouldClose())
     {
         handel.UpdatehandelDelta();
@@ -90,30 +91,34 @@ int main()
                 pos3.y = 15.f;
                 velocity.y *= -1.f;
             }
-            if (phy::CheckCollisionRec(glm::vec2(pos3.x, pos3.y), glm::vec2(15.f, 15.f), glm::vec2(pos2.x, pos2.y), size))
+            if (phy::CheckCollisionRec(glm::vec2(pos3.x, pos3.y), glm::vec2(15.f, 15.f), glm::vec2(pos2.x, pos2.y), size) && ch == 1)
             {
-                // pos3.y = pos2.y + size.y + (15.f / 2.f);
+                ch = 0;
+                
                 velocity.x *= -1.f;
                 //velocity.y *= -1.f;
-                Hlog(LOG_INFO, "Collision");
+                Hlog(LOG_INFO, "Collision B");
+				
             }
-            if (phy::CheckCollisionRec(glm::vec2(pos3.x, pos3.y), glm::vec2(15.f, 15.f), glm::vec2(pos.x, pos.y), size))
+            if (phy::CheckCollisionRec(glm::vec2(pos3.x, pos3.y), glm::vec2(15.f, 15.f), glm::vec2(pos.x, pos.y), size)&& ch == 0)
             {
                 // pos3.y = pos.y + size.y + (15.f / 2.f);
-
+                ch = 1;
                 velocity.x *= -1.f;
                 //velocity.y *= -1.f;
-                Hlog(LOG_INFO, "Collision");
+                Hlog(LOG_INFO, "Collision A");
             }
             if (pos3.x <= 0)
             {
                 pos3 = glm::vec3(400.f, 300.f, 0.f);
+                ch = 0;
                 velocity.x *= +1.f;
                 scoore.y++;
             }
             if (pos3.x >= handel.GetScreenSize().x)
             {
                 pos3 = glm::vec3(400.f, 300.f, 0.f);
+				ch = 1;
                 scoore.x++;
             }
 
