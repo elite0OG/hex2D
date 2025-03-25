@@ -1,6 +1,6 @@
 #pragma once
 
-
+#pragma warning( disable : 4005 )
 #define WIN32_LEAN_AND_MEAN 
 #define GLM_ENABLE_EXPERIMENTAL
 #include<glm/glm.hpp>
