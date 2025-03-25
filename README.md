@@ -19,3 +19,4 @@ Hex2D is a lightweight and efficient 2D rendering engine designed for game devel
 Stay tuned for more updates!
 ### December 
 	DirectX renderer is not complite but you can use it if you want 
+ 	if you are getting linking errors than replace packages folder with this folder -> ![Download page](https://elite0og.github.io/eliteWiki/package.html)
