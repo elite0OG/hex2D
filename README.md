@@ -20,5 +20,6 @@ Stay tuned for more updates!
 
 ### December
 The DirectX renderer is not complete yet, but you can use it if you want.  
+i only tested this on windows and it works i have no idea of macos
 If you are getting linking errors, replace the `packages` folder with this one:  
 🔗 **[Fix Linking Errors](https://elite0og.github.io/eliteWiki/package.html)**
